@@ -8,19 +8,20 @@
 </head>
 <body>
     <div class="terminal-main" id="terminal-main">
-        <div class="terminal-header" id="terminal-header">
-            <div class="terminal-header-buttons">
-                <button class="button close">x</button>
-                <button class="button minimize">-</button>
-                <button class="button fullscreen">o</button>
-                <span class="description">Terminal</span>
+        <div class="prevent-select">
+            <div class="terminal-header" id="terminal-header">
+                <div class="terminal-header-buttons">
+                    <button class="button close">x</button>
+                    <button class="button minimize">-</button>
+                    <button class="button fullscreen">o</button>
+                    <span class="description">Terminal</span>
+                </div>
             </div>
         </div>
         <div class="terminal-content">
-            <div class="terminal-output">
-                webOS version 0.0.0-alpha<br>
-                Created by Tobias Kisling (https://github.com/hasderhi)<br>
-                Enter <i>help</i> to get started...
+            <div class="terminal-output" id="terminal-output">webOS version 0.0.0-alpha
+Created by Tobias Kisling (https://github.com/hasderhi)
+Enter <i>help</i> to get started...
             </div>
             <div class="terminal-input-container">
                 <input type="text" class="terminal-input" id="terminal-input" placeholder="Enter command...">
