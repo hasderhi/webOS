@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>webOS</title>
+</head>
+<body>
+    <div class="terminal-main" id="terminal-main">
+        <div class="terminal-header" id="terminal-header">
+            <div class="terminal-header-buttons">
+                <button class="button close">x</button>
+                <button class="button minimize">-</button>
+                <button class="button fullscreen">o</button>
+                <span class="description">Terminal</span>
+            </div>
+        </div>
+        <div class="terminal-content">
+            <div class="terminal-output">
+                webOS version 0.0.0-alpha<br>
+                Created by Tobias Kisling (https://github.com/hasderhi)<br>
+                Enter <i>help</i> to get started...
+            </div>
+            <div class="terminal-input-container">
+                <input type="text" class="terminal-input" id="terminal-input" placeholder="Enter command...">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
