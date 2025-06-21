@@ -1,6 +1,35 @@
 const terminalMain = document.querySelector('.terminal-main');
 const terminalHeader = document.querySelector('.terminal-header');
 
+// To keep everything modular, even though currently there is only one window
+function changeVisibility(windowName) {
+    if (windowName === 'terminal') {
+        const terminalMain = document.querySelector('.terminal-main');
+        const style = window.getComputedStyle(terminalMain);
+        const visibility = style.getPropertyValue('visibility');
+        if (visibility === 'hidden') {
+            terminalMain.style.visibility = 'visible';
+        } else {
+            terminalMain.style.visibility = 'hidden';
+        }
+    }
+}
+
+function hideWindow(windowName) {
+    if (windowName === 'terminal') {
+        const terminalMain = document.querySelector('.terminal-main');
+        terminalMain.style.visibility = 'hidden';
+    }
+}
+
+function toggleFullscreen(windowName) {
+    // the wackiest "full"screen view you've ever seen
+    if (windowName === 'terminal') {
+        const terminal = document.getElementById('terminal-main');
+        terminal.classList.toggle('fullscreen-mode');
+    }
+}
+
 
 // Shamelessly stolen from my escape room project
 let isDragging = false;
@@ -51,6 +80,7 @@ fileSystem ={
 };
 
 let currentPath = ['/'];
+let username = "root"
 
 function storeFileSystem() {
     try {
@@ -198,7 +228,7 @@ terminalInput.addEventListener('keydown', function (e) {
         if (terminalCommand !== '') {
             const line = document.createElement('div');
             line.className = 'terminal-line';
-            line.textContent = `user: folder$ ${terminalCommand}`;
+            line.textContent = `${username}: ${currentPath.join('/')}$ ${terminalCommand}`;
             terminalOutput.appendChild(line);
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
             processCommand(terminalCommand);
@@ -222,7 +252,7 @@ function processCommand(terminalCommand) {
     } else if (terminalCommand === 'cls') {
         clearCommand(); // I know, we aren't on Windows, but I'm used to it...
     } else if (terminalCommand === 'exit') {
-        resetCommand(); // To be changed to "exitCommand", as soon as there will be a proper GUI with minimizing/closing
+        exitCommand();
     } else if (terminalCommand === 'storefs') {
         storeFileSystem();
     } else if (terminalCommand === 'loadfs') {
@@ -267,11 +297,13 @@ function clearCommand() {
     terminalOutput.innerHTML = "";
 }
 
-function resetCommand() {
+function exitCommand() {
+    hideWindow('terminal');
     const terminalOutput = document.getElementById('terminal-output');
-    terminalOutput.innerHTML = `webOS version 0.0.0-alpha
+    terminalOutput.innerHTML = `webOS version 0.0.1-alpha
 Created by Tobias Kisling (<a href="https://github.com/hasderhi">https://github.com/hasderhi</a>)
-Enter <i>help</i> to get started...`;
+Enter <i>help</i> to get started...`; // It is very likely that I'm going to forget to change 
+// the version number on both sides (HTML, JS) at one point...
 }
 
 function echoCommand(input) {

@@ -1,7 +1,10 @@
-body {
+html, body {
     background-color: #0e2b61;
     font-family: monospace;
     font-size: large;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 .prevent-select {
@@ -10,9 +13,32 @@ body {
     user-select: none;
 }
 
+.desktop {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.taskbar-main {
+    background-color: rgb(73, 73, 73);
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.taskbar-icon {
+    background: none;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
 
 
 .terminal-main {
+    visibility: hidden;
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
@@ -20,6 +46,8 @@ body {
     width: 800px;
     height: 600px;
     border: 2px solid #649fcf;
+    top: 150px;
+    left: 90px;
 }
 
 .terminal-header {
@@ -96,4 +124,13 @@ body {
 
 .description {
     margin-left: 620px;
+}
+
+.terminal-main.fullscreen-mode {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    border: none;
+    z-index: 99;
 }
