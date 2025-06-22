@@ -30,8 +30,29 @@ Enter <i>help</i> to get started...
                 </div>
             </div>
 
+            <div class="filebrowser-main" id="filebrowser-main">
+                <div class="prevent-select">
+                    <div class="filebrowser-header" id="filebrowser-header">
+                        <div class="terminal-header-buttons">
+                            <button class="button close" onclick="hideWindow('filebrowser')">x</button>
+                            <button class="button minimize" onclick="hideWindow('filebrowser')">-</button>
+                            <button class="button fullscreen" onclick="toggleFullscreen('filebrowser')">o</button>
+                            <button onclick="touchCommand(window.prompt('Enter name of new file','newfile.txt'))">New File</button>
+                            <button onclick="mkdirCommand(window.prompt('Enter name of new folder','new_folder'))">New Folder</button>
+                            <span class="description">File Browser</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="filebrowser-content" id="filebrowser-content">
+                    <div class="filebrowser-input-container">
+                        <input type="text" class="filebrowser-input" id="filebrowser-input" placeholder="Enter path...">
+                    </div>
+                </div>
+            </div>
+
             <div class="taskbar-main" id="taskbar-main">
                 <button onclick="changeVisibility('terminal')" class="taskbar-icon"><img src="img/icon_terminal.png" alt="Terminal" width="40px" height="40px"></button>
+                <button onclick="changeVisibility('filebrowser')" class="taskbar-icon"><img src="img/icon_filebrowser.png" alt="File Browser" width="40px" height="40px"></button>
             </div>
         </div>
 

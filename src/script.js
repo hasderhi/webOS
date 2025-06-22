@@ -13,12 +13,27 @@ function changeVisibility(windowName) {
             terminalMain.style.visibility = 'hidden';
         }
     }
+    else if (windowName === 'filebrowser') {
+        const fileBrowserMain = document.querySelector('.filebrowser-main');
+        const style = window.getComputedStyle(fileBrowserMain);
+        const visibility = style.getPropertyValue('visibility');
+        if (visibility === 'hidden') {
+            fileBrowserMain.style.visibility = 'visible';
+            renderFileBrowserContent();
+        } else {
+            fileBrowserMain.style.visibility = 'hidden';
+        }
+    }
 }
 
 function hideWindow(windowName) {
     if (windowName === 'terminal') {
         const terminalMain = document.querySelector('.terminal-main');
         terminalMain.style.visibility = 'hidden';
+    }
+    if (windowName === 'filebrowser') {
+        const fileBrowserMain = document.querySelector('.filebrowser-main');
+        fileBrowserMain.style.visibility = 'hidden';
     }
 }
 
@@ -28,35 +43,77 @@ function toggleFullscreen(windowName) {
         const terminal = document.getElementById('terminal-main');
         terminal.classList.toggle('fullscreen-mode');
     }
+    if (windowName === 'filebrowser') {
+        const terminal = document.getElementById('filebrowser-main');
+        terminal.classList.toggle('fullscreen-mode');
+    }
 }
 
 
 // Shamelessly stolen from my escape room project
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
+let terminal_isDragging = false;
+let terminal_offsetX = 0;
+let terminal_offsetY = 0;
 
 terminalHeader.addEventListener('mousedown', (e) => {
-    isDragging = true;
+    terminal_isDragging = true;
     const rect = terminalMain.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
+    terminal_offsetX = e.clientX - rect.left;
+    terminal_offsetY = e.clientY - rect.top;
     terminalHeader.style.cursor = 'grabbing';
     document.body.style.userSelect = 'none';
 });
 
 document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-        terminalMain.style.left = `${e.clientX - offsetX}px`;
-        terminalMain.style.top = `${e.clientY - offsetY}px`;
+    if (terminal_isDragging) {
+        terminalMain.style.left = `${e.clientX - terminal_offsetX}px`;
+        terminalMain.style.top = `${e.clientY - terminal_offsetY}px`;
     }
 });
 
 document.addEventListener('mouseup', () => {
-    isDragging = false;
+    terminal_isDragging = false;
     terminalHeader.style.cursor = 'grab';
     document.body.style.userSelect = '';
 });
+
+
+
+
+
+
+
+
+const fileBrowserMain = document.querySelector('.filebrowser-main');
+const fileBrowserHeader = document.querySelector('.filebrowser-header');
+
+let filebrowser_isDragging = false;
+let filebrowser_offsetX = 0;
+let filebrowser_offsetY = 0;
+
+fileBrowserHeader.addEventListener('mousedown', (e) => {
+    filebrowser_isDragging = true;
+    const rect = fileBrowserMain.getBoundingClientRect();
+    filebrowser_offsetX = e.clientX - rect.left;
+    filebrowser_offsetY = e.clientY - rect.top;
+    fileBrowserHeader.style.cursor = 'grabbing';
+    document.body.style.userSelect = 'none';
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (filebrowser_isDragging) {
+        fileBrowserMain.style.left = `${e.clientX - filebrowser_offsetX}px`;
+        fileBrowserMain.style.top = `${e.clientY - filebrowser_offsetY}px`;
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    filebrowser_isDragging = false;
+    fileBrowserHeader.style.cursor = 'grab';
+    document.body.style.userSelect = '';
+});
+
+
 
 
 
@@ -137,6 +194,7 @@ function storeFileSystem() {
         }
         printToTerminal('filesystem: error storing file system: ' + e.message);
     }
+    renderFileBrowserContent();
 }
 
 function loadFileSystem() {
@@ -152,12 +210,14 @@ function loadFileSystem() {
     } catch (e) {
         printToTerminal('filesystem: error loading file system: ' + e.message);
     }
+    renderFileBrowserContent();
 }
 
 function clearFileSystem() {
     clearUsers();
     localStorage.removeItem('fileSystem');
     printToTerminal('filesystem: file system removed from local storage.');
+    renderFileBrowserContent();
 }
 
 function getFileFromPath(path) {
@@ -262,6 +322,7 @@ function rmCommand(name) {
     } else {
         delete dir.contents[name];
     }
+    renderFileBrowserContent();
 }
 
 function mkdirCommand(dirName) {
@@ -274,12 +335,14 @@ function mkdirCommand(dirName) {
     } else {
         printToTerminal(`mkdir: cannot create directory '${dirName}': File exists`);
     }
+    renderFileBrowserContent();
 }
 
 function lsCommand() {
     const dir = getCurrentDir();
     const entries = Object.keys(dir.contents).join('  ');
     printToTerminal(entries || '(empty)');
+    renderFileBrowserContent(); // Not really needed as ls isn't changing the files, just here for consistency
 }
 
 function cdCommand(dirName) {
@@ -294,6 +357,7 @@ function cdCommand(dirName) {
     } else {
         printToTerminal(`cd: no such directory: ${dirName}`);
     }
+    renderFileBrowserContent();
 }
 
 function touchCommand(fileName) {
@@ -306,7 +370,14 @@ function touchCommand(fileName) {
     } else {
         printToTerminal(`touch: file '${fileName}' already exists`);
     }
+    renderFileBrowserContent();
 }
+
+
+
+
+
+
 
 const terminalInput = document.getElementById('terminal-input');
 const terminalOutput = document.getElementById('terminal-output');
@@ -426,6 +497,7 @@ function echoCommand(input) {
     } else {
         printToTerminal(message);
     }
+    renderFileBrowserContent();
 }
 
 function helpCommand() {
@@ -504,4 +576,86 @@ Saving / Retrieving the filesystem -
         `)
 }
 
-loadFileSystem()
+
+
+
+
+
+
+
+
+
+// Filebrowser
+
+
+
+function getDirectoryFromPath(path) {
+    const parts = path.split('/').filter(Boolean);
+    let current = fileSystem['/'];
+
+    for (let part of parts) {
+        if (current.type === 'directory' && current.contents[part]) {
+            current = current.contents[part];
+        } else {
+            return null;
+        }
+    }
+
+    return current;
+}
+
+function renderFileBrowserContent(path = '/') {
+    const container = document.getElementById("filebrowser-content");
+
+    const inputContainer = container.querySelector(".filebrowser-input-container");
+
+    container.innerHTML = '';
+    container.appendChild(inputContainer);
+
+    const input = document.getElementById("filebrowser-input");
+    input.value = path;
+
+    const dir = getDirectoryFromPath(path);
+
+    if (!dir || dir.type !== 'directory') {
+        container.appendChild(document.createTextNode("Invalid path"));
+        return;
+    }
+
+    const list = document.createElement("div");
+    list.classList.add("file-list");
+
+    for (const name in dir.contents) {
+        const item = dir.contents[name];
+        const element = document.createElement("div");
+        element.classList.add("file-item", item.type);
+        element.innerText = name;
+
+        if (item.type === 'directory') {
+            element.addEventListener('click', () => {
+                renderFileBrowserContent(`${path.endsWith('/') ? path : path + '/'}${name}`);
+            });
+        }
+
+        if (item.type === 'file') {
+            element.addEventListener('click', () => {
+                alert(item.content); // Just for testing, later there'll be an editor
+            });
+        }
+
+        list.appendChild(element);
+    }
+
+    container.appendChild(list);
+}
+
+document.getElementById('filebrowser-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        renderFileBrowserContent(this.value);
+    }
+});
+
+
+
+loadFileSystem(); // Debug, later the user will be able to choose whether they want to load from ls or not
+// Even though idk how I'll implement this, maybe through a "login" window
