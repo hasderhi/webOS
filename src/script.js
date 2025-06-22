@@ -59,6 +59,15 @@ document.addEventListener('mouseup', () => {
 });
 
 
+
+
+
+
+
+
+
+
+
 // Again, partially taken from an earlier project of mine
 
 fileSystem ={
@@ -80,9 +89,45 @@ fileSystem ={
 };
 
 let currentPath = ['/'];
-let username = "root"
+let users = ["root"];
+let username = "root";
+
+function storeUsers() {
+    try {
+        localStorage.setItem('users', users);
+        printToTerminal('filesystem: userfile stored successfully.');
+    } catch (e) {
+        if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+            printToTerminal('filesystem: out of space (This means that localStorage limits were reached)');
+        }
+        printToTerminal('filesystem: error storing userfile: ' + e.message);
+    }
+}
+
+function loadUsers() {
+    try {
+        const data = localStorage.getItem('users');
+        if (data) {
+            users = data;
+            printToTerminal('filesystem: userfile loaded from local storage.');
+        } else {
+            printToTerminal('filesystem: no userfile found in local storage.');
+        }
+    } catch (e) {
+        printToTerminal('filesystem: error loading userfile: ' + e.message);
+    }
+}
+
+function clearUsers() {
+    localStorage.removeItem('users');
+    printToTerminal('filesystem: userfile removed from local storage.');
+}
+
+
+
 
 function storeFileSystem() {
+    storeUsers();
     try {
         localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
         printToTerminal('filesystem: file system stored successfully.');
@@ -95,6 +140,7 @@ function storeFileSystem() {
 }
 
 function loadFileSystem() {
+    loadUsers();
     try {
         const data = localStorage.getItem('fileSystem');
         if (data) {
@@ -109,6 +155,7 @@ function loadFileSystem() {
 }
 
 function clearFileSystem() {
+    clearUsers();
     localStorage.removeItem('fileSystem');
     printToTerminal('filesystem: file system removed from local storage.');
 }
@@ -142,6 +189,48 @@ function pwdCommand() {
     }
     else {
         printToTerminal(path === '' ? '/' : path);
+    }
+}
+
+function whoamiCommand() {
+    printToTerminal(username);
+}
+
+function listUsersCommand() {
+    printToTerminal(users);
+}
+
+function useraddCommand(username) {
+    if (users.includes(username)) {
+        printToTerminal(`useradd: cannot add user ${username}, user with this name already exists`);
+        return;
+    } 
+    users.push(username);
+    printToTerminal(`useradd: created user ${username}`);
+}
+
+function userdelCommand(username) {
+    if (username === 'root') {
+        printToTerminal(`userdel: cannot delete root`);
+        return;
+    }
+    const index = users.indexOf(username);
+    if (index > -1) {
+        users.splice(index, 1);
+        printToTerminal(`userdel: deleted user ${username}`);
+        suCommand("root");
+    }
+    else {
+        printToTerminal(`userdel: no user with this name was found`)
+    }
+}
+
+function suCommand(username_input) {
+    if (users.includes(username_input)) {
+        username = username_input;
+    }
+    else {
+        printToTerminal(`su: cannot switch user, no user with this name was found`)
     }
 }
 
@@ -276,8 +365,21 @@ function processCommand(terminalCommand) {
     } else if (terminalCommand.startsWith('rm ')) {
         const arg = terminalCommand.split(' ')[1];
         rmCommand(arg);
-    }  else if (terminalCommand === 'pwd') {
+    } else if (terminalCommand === 'pwd') {
         pwdCommand();
+    } else if (terminalCommand === 'whoami') {
+        whoamiCommand();
+    } else if (terminalCommand === 'lsusr') { 
+        listUsersCommand();
+    } else if (terminalCommand.startsWith('useradd')) { 
+        const arg = terminalCommand.split(' ')[1];
+        useraddCommand(arg);
+    } else if (terminalCommand.startsWith('userdel')) { 
+        const arg = terminalCommand.split(' ')[1];
+        userdelCommand(arg);
+    } else if (terminalCommand.startsWith('su')) { 
+        const arg = terminalCommand.split(' ')[1];
+        suCommand(arg);
     } else {
         printToTerminal(`${terminalCommand}: command not found`)
     }
@@ -368,6 +470,23 @@ Working with files / directories -
     - pwd
         Usage: pwd
         Description: Show the current filepath
+
+Managing users -
+    - whoami
+        Usage: whoami
+        Description: Show the user currently logged in
+    - lsusr
+        Usage: lsusr
+        Description: List all users
+    - useradd
+        Usage: useradd <username>
+        Description: Add a new user
+    - userdel
+        Usage: userdel <username>
+        Description: Delete an existing user
+    - su
+        Usage: su <username>
+        Description: Switch to another existing user
 
 Saving / Retrieving the filesystem -
     - storefs
