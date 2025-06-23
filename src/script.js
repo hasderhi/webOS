@@ -256,6 +256,21 @@ function whoamiCommand() {
     printToTerminal(username);
 }
 
+function fingerCommand(username) {
+    if (users.includes(username)) {
+        printToTerminal(`Login: ${username}                         
+Name: ${username}
+Directory: /home/               
+Shell: /bin/whatever_shell_idk_what_im_gonna_name_it
+On since idk_when_im_gonna_implement_a_date
+No mail.
+No Plan.`);
+    }
+    else {
+        printToTerminal(`finger: no user with this name was found`)
+    }
+}
+
 function listUsersCommand() {
     printToTerminal(users);
 }
@@ -326,7 +341,7 @@ function rmCommand(name) {
 }
 
 function mkdirCommand(dirName) {
-    if (dirName === 'null') {
+    if (dirName === null) {
         printToTerminal(`mkdir: cannot create directory named ${dirName}, aborted`);
         return;
     }
@@ -365,7 +380,7 @@ function cdCommand(dirName) {
 }
 
 function touchCommand(fileName) {
-    if (filename === 'null') {
+    if (fileName === null) {
         printToTerminal(`touch: cannot create file named ${fileName}, aborted`);
         return;
     }
@@ -450,15 +465,18 @@ function processCommand(terminalCommand) {
         whoamiCommand();
     } else if (terminalCommand === 'lsusr') { 
         listUsersCommand();
-    } else if (terminalCommand.startsWith('useradd')) { 
+    } else if (terminalCommand.startsWith('useradd ')) { 
         const arg = terminalCommand.split(' ')[1];
         useraddCommand(arg);
-    } else if (terminalCommand.startsWith('userdel')) { 
+    } else if (terminalCommand.startsWith('userdel ')) { 
         const arg = terminalCommand.split(' ')[1];
         userdelCommand(arg);
-    } else if (terminalCommand.startsWith('su')) { 
+    } else if (terminalCommand.startsWith('su ')) {
         const arg = terminalCommand.split(' ')[1];
         suCommand(arg);
+    } else if (terminalCommand.startsWith('finger ')) {
+        const arg = terminalCommand.split(' ')[1];
+        fingerCommand(arg);
     } else {
         printToTerminal(`${terminalCommand}: command not found`)
     }
