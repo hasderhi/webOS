@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bootloader.css">
+        <title>webOS</title>
+    </head>
+    <body>
+        <div class="bootloader-title">
+            <h1>webOS Bootloader  -  Version 0.0.1</h1>
+        </div>
+        <div class="bootloader-selector">
+            <ul class="bootloader-options">
+                <li id="bootloader-option-1" class="selected">Start webOS 0.0.1-alpha</li>
+                <li id="bootloader-option-2">Start webOS 0.0.1-alpha without localStorage</li>
+                <li id="bootloader-option-3">Power off</li>
+                <li id="bootloader-option-4">Memory test</li>
+            </ul>
+        </div>
+        <div class="bootloader-info">
+            <p>Use the ↑ and ↓ keys to select which entry is highlighted.</p>
+            <p>Press Enter to boot the selected OS, or power off.</p>
+            <p>Powering off will bring you back to the start page.</p>
+        </div>
+        <script src="bootloader.js"></script>
+    </body>
+</html>

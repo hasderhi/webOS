@@ -326,6 +326,10 @@ function rmCommand(name) {
 }
 
 function mkdirCommand(dirName) {
+    if (dirName === 'null') {
+        printToTerminal(`mkdir: cannot create directory named ${dirName}, aborted`);
+        return;
+    }
     const dir = getCurrentDir();
     if (!dir.contents[dirName]) {
         dir.contents[dirName] = {
@@ -361,6 +365,10 @@ function cdCommand(dirName) {
 }
 
 function touchCommand(fileName) {
+    if (filename === 'null') {
+        printToTerminal(`touch: cannot create file named ${fileName}, aborted`);
+        return;
+    }
     const dir = getCurrentDir();
     if (!dir.contents[fileName]) {
         dir.contents[fileName] = {

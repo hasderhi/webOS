@@ -1,0 +1,54 @@
+body, html {
+    background-color: rgb(0, 0, 0);
+    font-family: monospace;
+    font-size: larger;
+    color:white;
+}
+
+.bootloader-title {
+    color: rgb(129, 129, 129);
+    text-align: center;
+}
+
+.bootloader-selector {
+    color: white;
+    border-style: solid;
+    border-width: 2px;
+    text-align: left;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+    padding:10px;
+    padding-bottom: 10%;
+}
+
+.bootloader-options {
+    list-style-type: none;
+}
+
+.bootloader-options .selected {
+    background-color: antiquewhite;
+    color:black;
+}
+
+.bootloader-info {
+    color: rgb(129, 129, 129);
+    text-align: center;
+}
+
+.boot-log-msg {
+    color: white;
+}
+
+.boot-log-msg-ok {
+    color:rgb(9, 199, 9);
+}
+
+.boot-log-container {
+    max-height: 100vh;
+    overflow-y: auto;
+    font-family: monospace;
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
