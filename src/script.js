@@ -361,6 +361,7 @@ function lsCommand() {
     const entries = Object.keys(dir.contents).join('  ');
     printToTerminal(entries || '(empty)');
     renderFileBrowserContent(); // Not really needed as ls isn't changing the files, just here for consistency
+    // This is bad because now the explorer resets everytime, but this isn't a problem with the commands, I need to fix this on the explorer side.
 }
 
 function cdCommand(dirName) {
@@ -667,7 +668,7 @@ function renderFileBrowserContent(path = '/') {
 
         if (item.type === 'file') {
             element.addEventListener('click', () => {
-                alert(item.content); // Just for testing, later there'll be an editor
+                alert(item.content); // Just for testing, later there'll be an editor, I'm just unsure if it's gonna be a nice visual one or if I want to simulate VIM
             });
         }
 
