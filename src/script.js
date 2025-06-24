@@ -686,4 +686,4 @@ document.getElementById('filebrowser-input').addEventListener('keydown', functio
 
 
 loadFileSystem(); // Debug, later the user will be able to choose whether they want to load from ls or not
-// Even though idk how I'll implement this, maybe through a "login" window
+// through the "bootloader" window
