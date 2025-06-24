@@ -411,7 +411,7 @@ terminalInput.addEventListener('keydown', function (e) {
         if (terminalCommand !== '') {
             const line = document.createElement('div');
             line.className = 'terminal-line';
-            line.textContent = `${username}: ${currentPath.join('/')}$ ${terminalCommand}`;
+            line.textContent = `${username}@webos-host: ${currentPath.join('/')}$ ${terminalCommand}`;
             terminalOutput.appendChild(line);
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
             processCommand(terminalCommand);
@@ -585,6 +585,9 @@ Managing users -
     - su
         Usage: su <username>
         Description: Switch to another existing user
+    - finger
+        Usage: finger <username>
+        Description: Show information about an user
 
 Saving / Retrieving the filesystem -
     - storefs
