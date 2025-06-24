@@ -1,7 +1,6 @@
 const terminalMain = document.querySelector('.terminal-main');
 const terminalHeader = document.querySelector('.terminal-header');
 
-// To keep everything modular, even though currently there is only one window
 function changeVisibility(windowName) {
     if (windowName === 'terminal') {
         const terminalMain = document.querySelector('.terminal-main');
