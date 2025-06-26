@@ -31,10 +31,10 @@ function goForward(option) {
     if (option === 'webOS_normal') {
         document.location.href = 'boot.html';
     } else if (option === 'webOS_no_ls') {
-        document.location.href = 'index.html';
+        document.location.href = 'main.html';
         console.log('webOS without localStorage');
     } else if (option === 'poweroff') {
-        console.log('Powering off...');
+        document.location.href = 'index.html';
     } else if (option === 'memtest') {
         alert(`Your memory seems alright to me!`);
     }

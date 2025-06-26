@@ -1,0 +1,18 @@
+body, html {
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    font-size: larger;
+    text-align: center;
+    margin:5vh;
+}
+
+a {
+    color: white;
+    margin: 2vh;
+    font-size: xx-large;
+}
+
+a:hover {
+    color:antiquewhite;
+}

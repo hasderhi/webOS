@@ -78,7 +78,7 @@ async function generateBootLogs() {
         const randomDelay = Math.random() * 500;
         await sleep(randomDelay);
     }
-    window.location.href = 'index.html';
+    window.location.href = 'main.html';
 }
 
 generateBootLogs();

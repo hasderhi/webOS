@@ -3,61 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles_startpage.css">
     <title>webOS</title>
 </head>
-    <body>
-        <div class="desktop" id="desktop">
-            <div class="terminal-main" id="terminal-main">
-                <div class="prevent-select">
-                    <div class="terminal-header" id="terminal-header">
-                        <div class="terminal-header-buttons">
-                            <button class="button close" onclick="exitCommand()">x</button>
-                            <button class="button minimize" onclick="hideWindow('terminal')">-</button>
-                            <button class="button fullscreen" onclick="toggleFullscreen('terminal')">o</button>
-                            <span class="description">Terminal</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="terminal-content">
-                    <div class="terminal-output" id="terminal-output">webOS version 0.0.1-alpha
-Created by Tobias Kisling (<a href="https://github.com/hasderhi">https://github.com/hasderhi</a>)
-Enter <i>help</i> to get started...
-                    </div>
-                    <div class="terminal-input-container">
-                        <input type="text" class="terminal-input" id="terminal-input" placeholder="Enter command...">
-                    </div>
-                </div>
-            </div>
-
-            <div class="filebrowser-main" id="filebrowser-main">
-                <div class="prevent-select">
-                    <div class="filebrowser-header" id="filebrowser-header">
-                        <div class="terminal-header-buttons">
-                            <button class="button close" onclick="hideWindow('filebrowser')">x</button>
-                            <button class="button minimize" onclick="hideWindow('filebrowser')">-</button>
-                            <button class="button fullscreen" onclick="toggleFullscreen('filebrowser')">o</button>
-                            <span class="description">File Browser</span>
-                            <br>
-                            <br>
-                            <button onclick="touchCommand(window.prompt('Enter name of new file','newfile.txt'))">New File</button>
-                            <button onclick="mkdirCommand(window.prompt('Enter name of new folder','new_folder'))">New Folder</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="filebrowser-content" id="filebrowser-content">
-                    <div class="filebrowser-input-container">
-                        <input type="text" class="filebrowser-input" id="filebrowser-input" placeholder="Enter path...">
-                    </div>
-                </div>
-            </div>
-
-            <div class="taskbar-main" id="taskbar-main">
-                <button onclick="changeVisibility('terminal')" class="taskbar-icon"><img src="img/icon_terminal.png" alt="Terminal" width="40px" height="40px"></button>
-                <button onclick="changeVisibility('filebrowser')" class="taskbar-icon"><img src="img/icon_filebrowser.png" alt="File Browser" width="40px" height="40px"></button>
-            </div>
-        </div>
-
-        <script src="script.js"></script>
-    </body>
+<body>
+    <div class="title-logo-container">
+        <h1>webOS</h1>
+    </div>
+    <a href="bootloader.html">Start</a>
+    <a href="">Information</a>
+    <p>Yes, this start page looks terrible, but I'll improve it when I'm finished with the actual project.</p>
+    <footer>
+        Made by Tobias Kisling. Development version 0.0.1-alpha (Maybe be another version, in this case I forgot to update this.)
+    </footer>
+</body>
 </html>

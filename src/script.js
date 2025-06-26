@@ -308,6 +308,24 @@ function suCommand(username_input) {
     }
 }
 
+function logoutCommand() {
+    // Currently just switches to root, maybe I'm gonna implement a proper login system later on
+    printToTerminal('logout')
+
+    // So you can actually see the msg
+    setTimeout(() => {
+        suCommand('root');
+    }, '1000');
+    setTimeout(() => {
+        exitCommand();
+    }, '1500')
+}
+
+function shutdownCommand() {
+    logoutCommand();
+    window.location.href = 'shutdown.html';
+}
+
 function catCommand(fileName) {
     const dir = getCurrentDir();
     const file = dir.contents[fileName];
@@ -329,7 +347,7 @@ function rmCommand(name) {
         printToTerminal(`rm: cannot remove '${name}': No such file or directory`);
     } else if (item.type === 'directory') {
         if (Object.keys(item.contents).length > 0) {
-            printToTerminal(`rm: cannot remove '${name}': Directory not empty`);
+            printToTerminal(`rm: cannot remove '${name}': Directory not empty`); // who needs -r anyways?
         } else {
             delete dir.contents[name];
         }
@@ -474,6 +492,10 @@ function processCommand(terminalCommand) {
     } else if (terminalCommand.startsWith('su ')) {
         const arg = terminalCommand.split(' ')[1];
         suCommand(arg);
+    } else if (terminalCommand === 'logout') {
+        logoutCommand();
+    } else if (terminalCommand === 'shutdown') {
+        shutdownCommand();
     } else if (terminalCommand.startsWith('finger ')) {
         const arg = terminalCommand.split(' ')[1];
         fingerCommand(arg);
@@ -544,6 +566,14 @@ General -
         Usage: echo <text> > <filepath>
         Description: Print text to terminal or, optionally, 
         write it to specified filepath.
+
+Managing system -
+    - logout
+        Usage: logout
+        Description: Log out of your user and close the terminal.
+    - shutdown
+        Usage: shutdown
+        Description: Log out and shut down the system.
 
 Working with files / directories -
     - touch
