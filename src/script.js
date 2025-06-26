@@ -23,16 +23,28 @@ function changeVisibility(windowName) {
             fileBrowserMain.style.visibility = 'hidden';
         }
     }
+    else if (windowName === 'editor') {
+        const editorMain = document.querySelector('.editor-main');
+        const style = window.getComputedStyle(editorMain);
+        const visibility = style.getPropertyValue('visibility');
+        if (visibility === 'hidden') {
+            editorMain.style.visibility = 'visible';
+        } else {
+            editorMain.style.visibility = 'hidden';
+        }
+    }
 }
 
 function hideWindow(windowName) {
     if (windowName === 'terminal') {
         const terminalMain = document.querySelector('.terminal-main');
         terminalMain.style.visibility = 'hidden';
-    }
-    if (windowName === 'filebrowser') {
+    } else if (windowName === 'filebrowser') {
         const fileBrowserMain = document.querySelector('.filebrowser-main');
         fileBrowserMain.style.visibility = 'hidden';
+    } else if (windowName === 'editor') {
+        const editorMain = document.querySelector('.editor-main');
+        editorMain.style.visibility = 'hidden';
     }
 }
 
@@ -41,10 +53,12 @@ function toggleFullscreen(windowName) {
     if (windowName === 'terminal') {
         const terminal = document.getElementById('terminal-main');
         terminal.classList.toggle('fullscreen-mode');
-    }
-    if (windowName === 'filebrowser') {
-        const terminal = document.getElementById('filebrowser-main');
-        terminal.classList.toggle('fullscreen-mode');
+    } else if (windowName === 'filebrowser') {
+        const filebrowser = document.getElementById('filebrowser-main');
+        filebrowser.classList.toggle('fullscreen-mode');
+    } else if (windowName === 'editor') {
+        const editor = document.getElementById('editor-main');
+        editor.classList.toggle('fullscreen-mode');
     }
 }
 
@@ -79,7 +93,8 @@ document.addEventListener('mouseup', () => {
 
 
 
-
+// Do you like spaghetti?
+// Because you're going to see a lot.
 
 
 
@@ -116,7 +131,34 @@ document.addEventListener('mouseup', () => {
 
 
 
+const editorMain = document.querySelector('.editor-main');
+const editorHeader = document.querySelector('.editor-header');
 
+let editor_isDragging = false;
+let editor_offsetX = 0;
+let editor_offsetY = 0;
+
+editorHeader.addEventListener('mousedown', (e) => {
+    editor_isDragging = true;
+    const rect = editorMain.getBoundingClientRect();
+    editor_offsetX = e.clientX - rect.left;
+    editor_offsetY = e.clientY - rect.top;
+    editorHeader.style.cursor = 'grabbing';
+    document.body.style.userSelect = 'none';
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (editor_isDragging) {
+        editorMain.style.left = `${e.clientX - editor_offsetX}px`;
+        editorMain.style.top = `${e.clientY - editor_offsetY}px`;
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    editor_isDragging = false;
+    editorHeader.style.cursor = 'grab';
+    document.body.style.userSelect = '';
+});
 
 
 
