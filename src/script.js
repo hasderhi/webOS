@@ -94,7 +94,7 @@ document.addEventListener('mouseup', () => {
 
 
 // Do you like spaghetti?
-// Because you're going to see a lot.
+// Because you're going to see them a lot.
 
 
 
@@ -159,8 +159,6 @@ document.addEventListener('mouseup', () => {
     editorHeader.style.cursor = 'grab';
     document.body.style.userSelect = '';
 });
-
-
 
 
 
@@ -760,3 +758,158 @@ document.getElementById('filebrowser-input').addEventListener('keydown', functio
 
 loadFileSystem(); // Debug, later the user will be able to choose whether they want to load from ls or not
 // through the "bootloader" window
+
+
+
+// Alerts
+
+function createAlert(type, title, message) {
+    const container = document.getElementById('desktop');
+
+    if (type === 'alert') {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert-main';
+        alertDiv.innerHTML = `
+            <div class="prevent-select">
+                <div class="alert-header" id="alert-header">
+                    <div class="alert-header-buttons">
+                        <span class="description">${title}</span>
+                    </div>
+                </div>
+                <div class="alert-content">
+                    <img src="img/icon_alert.png" alt="Alert" width="60">
+                    <p>${message}</p>
+                    <button onclick="this.closest('.alert-main').remove()">Close</button>
+                </div>
+            </div>
+        `;
+        container.appendChild(alertDiv);
+        
+        const alertMain = document.querySelector('.alert-main');
+        const alertHeader = document.querySelector('.alert-header');
+
+
+        let alert_isDragging = false;
+        let alert_offsetX = 0;
+        let alert_offsetY = 0;
+
+        alertHeader.addEventListener('mousedown', (e) => {
+            alert_isDragging = true;
+            const rect = alertMain.getBoundingClientRect();
+            alert_offsetX = e.clientX - rect.left;
+            alert_offsetY = e.clientY - rect.top;
+            alertHeader.style.cursor = 'grabbing';
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (alert_isDragging) {
+                alertMain.style.left = `${e.clientX - alert_offsetX}px`;
+                alertMain.style.top = `${e.clientY - alert_offsetY}px`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            alert_isDragging = false;
+            alertHeader.style.cursor = 'grab';
+            document.body.style.userSelect = '';
+        });
+    } else if (type === 'error') {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-main';
+        errorDiv.innerHTML = `
+            <div class="prevent-select">
+                <div class="error-header" id="error-header">
+                    <div class="error-header-buttons">
+                        <span class="description">${title}</span>
+                    </div>
+                </div>
+                <div class="error-content">
+                    <img src="img/icon_forbidden.png" alt="Error" width="60">
+                    <p>${message}</p>
+                    <button onclick="this.closest('.error-main').remove()">Close</button>
+                </div>
+            </div>
+        `;
+        container.appendChild(errorDiv);
+        
+        const errorMain = document.querySelector('.error-main');
+        const errorHeader = document.querySelector('.error-header');
+
+
+        let error_isDragging = false;
+        let error_offsetX = 0;
+        let error_offsetY = 0;
+
+        errorHeader.addEventListener('mousedown', (e) => {
+            error_isDragging = true;
+            const rect = errorMain.getBoundingClientRect();
+            error_offsetX = e.clientX - rect.left;
+            error_offsetY = e.clientY - rect.top;
+            errorHeader.style.cursor = 'grabbing';
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (error_isDragging) {
+                errorMain.style.left = `${e.clientX - error_offsetX}px`;
+                errorMain.style.top = `${e.clientY - error_offsetY}px`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            error_isDragging = false;
+            errorHeader.style.cursor = 'grab';
+            document.body.style.userSelect = '';
+        });
+    } else if (type === 'info') {
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'info-main';
+        infoDiv.innerHTML = `
+            <div class="prevent-select">
+                <div class="info-header" id="info-header">
+                    <div class="info-header-buttons">
+                        <span class="description">${title}</span>
+                    </div>
+                </div>
+                <div class="info-content">
+                    <img src="img/icon_info.png" alt="Info" width="60">
+                    <p>${message}</p>
+                    <button onclick="this.closest('.info-main').remove()">Close</button>
+                </div>
+            </div>
+        `;
+        container.appendChild(infoDiv);
+        
+        const infoMain = document.querySelector('.info-main');
+        const infoHeader = document.querySelector('.info-header');
+
+
+        let info_isDragging = false;
+        let info_offsetX = 0;
+        let info_offsetY = 0;
+
+        infoHeader.addEventListener('mousedown', (e) => {
+            info_isDragging = true;
+            const rect = infoMain.getBoundingClientRect();
+            info_offsetX = e.clientX - rect.left;
+            info_offsetY = e.clientY - rect.top;
+            infoHeader.style.cursor = 'grabbing';
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (info_isDragging) {
+                infoMain.style.left = `${e.clientX - info_offsetX}px`;
+                infoMain.style.top = `${e.clientY - info_offsetY}px`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            info_isDragging = false;
+            infoHeader.style.cursor = 'grab';
+            document.body.style.userSelect = '';
+        });
+    }
+    
+}

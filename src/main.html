@@ -68,89 +68,13 @@ Enter <i>help</i> to get started...
                 </div>
             </div>
 
-            <div class="alert-main" id="alert-main">
-                <div class="prevent-select">
-                    <div class="alert-header" id="alert-header">
-                        <div class="alert-header-buttons">
-                            <span class="description">ALERT_MSG</span>
-                        </div>
-                    </div>
-                    <div class="alert-content">
-                        <img src="img/icon_alert.png" alt="Alert" width="60">
-                        <p>ALERT_MSG</p>
-                        <button onclick="">Close</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="error-main" id="error-main">
-                <div class="prevent-select">
-                    <div class="error-header" id="error-header">
-                        <div class="error-header-buttons">
-                            <span class="description">ALERT_MSG</span>
-                        </div>
-                    </div>
-                    <div class="error-content">
-                        <img src="img/icon_forbidden.png" alt="Error" width="60">
-                        <p>ALERT_MSG</p>
-                        <button onclick="">Close</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-main" id="info-main">
-                <div class="prevent-select">
-                    <div class="info-header" id="info-header">
-                        <div class="info-header-buttons">
-                            <span class="description">INFO_MSG</span>
-                        </div>
-                    </div>
-                    <div class="info-content">
-                        <img src="img/icon_info.png" alt="Info" width="60">
-                        <p>INFO_MSG</p>
-                        <button onclick="">Close</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-main" id="question-main">
-                <div class="prevent-select">
-                    <div class="question-header" id="question-header">
-                        <div class="question-header-buttons">
-                            <span class="description">QUESTION_MSG</span>
-                        </div>
-                    </div>
-                    <div class="question-content">
-                        <img src="img/icon_question.png" alt="Question" width="60">
-                        <p>QUESTION_MSG</p>
-                        <button onclick="">Yes</button>
-                        <button onclick="">No</button>
-                        <button onclick="">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="input-main" id="input-main">
-                <div class="prevent-select">
-                    <div class="input-header" id="input-header">
-                        <div class="input-header-buttons">
-                            <span class="description">INPUT_MSG</span>
-                        </div>
-                    </div>
-                    <div class="input-content">
-                        <img src="img/icon_input.png" alt="Input" width="60">
-                        <p>INPUT_MSG</p>
-                        <input type="text" placeholder="INPUT_PLACEHOLDER">
-                        <button onclick="">Enter</button>
-                        <button onclick="">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
             <div class="taskbar-main" id="taskbar-main">
                 <button onclick="changeVisibility('terminal')" class="taskbar-icon"><img src="img/icon_terminal.png" alt="Terminal" width="40px" height="40px"></button>
                 <button onclick="changeVisibility('filebrowser')" class="taskbar-icon"><img src="img/icon_filebrowser.png" alt="File Browser" width="40px" height="40px"></button>
                 <button onclick="changeVisibility('editor')" class="taskbar-icon"><img src="img/icon_editor.png" alt="Editor" width="40px" height="40px"></button>
+                <button onclick="createAlert('alert', 'ALERT_TITLE', 'ALERT_MSG')" class="taskbar-icon"><img src="img/icon_alert.png" alt="Alert (Debug)" width="40px" height="40px"></button>
+                <button onclick="createAlert('error', 'ERROR_TITLE', 'ERROR_MSG')" class="taskbar-icon"><img src="img/icon_forbidden.png" alt="Error (Debug)" width="40px" height="40px"></button>
+                <button onclick="createAlert('info', 'INFO_TITLE', 'INFO_MSG')" class="taskbar-icon"><img src="img/icon_info.png" alt="Info (Debug)" width="40px" height="40px"></button>
             </div>
         </div>
 

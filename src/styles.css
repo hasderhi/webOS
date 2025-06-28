@@ -213,7 +213,6 @@ html, body {
 
 
 .alert-main {
-    visibility: hidden;
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
@@ -252,7 +251,6 @@ html, body {
 
 
 .error-main {
-    visibility: hidden;
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
@@ -289,7 +287,6 @@ html, body {
 
 
 .info-main {
-    visibility: hidden;
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
@@ -325,7 +322,6 @@ html, body {
 
 
 .question-main {
-    visibility: hidden;
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
@@ -365,7 +361,6 @@ html, body {
 
 
 .input-main {
-    visibility: hidden;
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
