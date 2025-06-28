@@ -58,13 +58,12 @@ Enter <i>help</i> to get started...
                         <div class="editor-header-buttons">
                             <button class="button close" onclick="hideWindow('editor')">x</button> <!--TODO: Change the function as soon as editor is implememted-->
                             <button class="button minimize" onclick="hideWindow('editor')">-</button>
-                            <button class="button fullscreen" onclick="toggleFullscreen('editor')">o</button>
                             <span class="description">Editor</span>
                         </div>
                     </div>
-                    <div class="editor-content">
-                        <p>To be implemented...</p>
-                    </div>
+                    <button onclick="">Save File</button>
+                    <button onclick="">Open File</button>
+                    <textarea class="editor-content" id="editor-content" placeholder="Start typing..."></textarea>
                 </div>
             </div>
 
@@ -75,6 +74,9 @@ Enter <i>help</i> to get started...
                 <button onclick="createAlert('alert', 'ALERT_TITLE', 'ALERT_MSG')" class="taskbar-icon"><img src="img/icon_alert.png" alt="Alert (Debug)" width="40px" height="40px"></button>
                 <button onclick="createAlert('error', 'ERROR_TITLE', 'ERROR_MSG')" class="taskbar-icon"><img src="img/icon_forbidden.png" alt="Error (Debug)" width="40px" height="40px"></button>
                 <button onclick="createAlert('info', 'INFO_TITLE', 'INFO_MSG')" class="taskbar-icon"><img src="img/icon_info.png" alt="Info (Debug)" width="40px" height="40px"></button>
+                <button onclick="createQuestion('QUESTION_TITLE', 'QUESTION_MSG', 'alert(`Hello World!\n(Not too pleased with the current solution, may change later)`); this.closest(`.question-main`).remove()')" class="taskbar-icon"><img src="img/icon_question.png" alt="Info (Debug)" width="40px" height="40px"></button>
+                <button onclick="loadTextEditor('home/readme.txt')" class="taskbar-icon"><img src="img/icon_debug.png" alt="Load Editor (Debug)" width="40px" height="40px"></button>
+                
             </div>
         </div>
 

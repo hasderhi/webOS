@@ -56,9 +56,6 @@ function toggleFullscreen(windowName) {
     } else if (windowName === 'filebrowser') {
         const filebrowser = document.getElementById('filebrowser-main');
         filebrowser.classList.toggle('fullscreen-mode');
-    } else if (windowName === 'editor') {
-        const editor = document.getElementById('editor-main');
-        editor.classList.toggle('fullscreen-mode');
     }
 }
 
@@ -756,6 +753,42 @@ document.getElementById('filebrowser-input').addEventListener('keydown', functio
 
 
 
+
+
+// Editor
+function getFileContentFromPath(path) {
+    const parts = path.split('/');
+    let current = fileSystem['/'];
+
+    for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        if (!current || current.type !== 'directory' || !current.contents[part]) {
+            return 'Error: Path not found';
+        }
+        current = current.contents[part];
+    }
+
+    if (current.type === 'file') {
+        return current.content;
+    } else {
+        return 'Error: Not a file';
+    }
+}
+
+
+function loadTextEditor(path) { // Trash function, will be replaced ASAP
+    content = getFileContentFromPath(path);
+    document.getElementById('editor-content').value = content;
+}
+
+
+
+
+
+
+
+document.getElementById('editor-content').value = ''; // Because sometimes the browser's naughty and somehow saves the value of the textArea
+
 loadFileSystem(); // Debug, later the user will be able to choose whether they want to load from ls or not
 // through the "bootloader" window
 
@@ -912,4 +945,59 @@ function createAlert(type, title, message) {
         });
     }
     
+}
+
+
+function createQuestion(title, message, option) {
+    const container = document.getElementById('desktop');
+
+    const questionDiv = document.createElement('div');
+    questionDiv.className = 'question-main';
+    questionDiv.innerHTML = `
+        <div class="prevent-select">
+            <div class="question-header" id="question-header">
+                <div class="question-header-buttons">
+                    <span class="description">${title}</span>
+                </div>
+            </div>
+            <div class="question-content">
+                <img src="img/icon_question.png" alt="Question" width="60">
+                <p>${message}</p>
+                <button onclick="${option}">Yes</button>
+                <button onclick="this.closest('.question-main').remove()">No</button>
+                <button onclick="this.closest('.question-main').remove()">Cancel</button>
+            </div>
+        </div>
+    `; // idk if I'm gonna leave this like that, maybe I'll change the "No" method later
+    container.appendChild(questionDiv);
+    
+    const questionMain = document.querySelector('.question-main');
+    const questionHeader = document.querySelector('.question-header');
+
+
+    let question_isDragging = false;
+    let question_offsetX = 0;
+    let question_offsetY = 0;
+
+    questionHeader.addEventListener('mousedown', (e) => {
+        question_isDragging = true;
+        const rect = questionMain.getBoundingClientRect();
+        question_offsetX = e.clientX - rect.left;
+        question_offsetY = e.clientY - rect.top;
+        questionHeader.style.cursor = 'grabbing';
+        document.body.style.userSelect = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (question_isDragging) {
+            questionMain.style.left = `${e.clientX - question_offsetX}px`;
+            questionMain.style.top = `${e.clientY - question_offsetY}px`;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        question_isDragging = false;
+        questionHeader.style.cursor = 'grab';
+        document.body.style.userSelect = '';
+    });
 }

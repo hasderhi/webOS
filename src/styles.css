@@ -408,7 +408,7 @@ html, body {
     visibility: hidden;
     position: absolute;
     z-index: 9;
-    background-color: #f1f1f1;
+    background-color: #649fcf;
     border: 1px solid #d3d3d3;
     width: 800px;
     height: 600px;
@@ -426,18 +426,11 @@ html, body {
 }
 
 .editor-content {
-    position: relative;
-    height: calc(100% - 40px);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    width: 791px;
+    height: 526px;
+    resize: none;
 }
 
-.editor-main.fullscreen-mode {
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: calc(100vh - 50px);
-    border: none;
-    z-index: 99;
+.editor-main .description {
+    margin-left: 660px;
 }
