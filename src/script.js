@@ -32,6 +32,15 @@ function changeVisibility(windowName) {
         } else {
             editorMain.style.visibility = 'hidden';
         }
+    } else if (windowName === 'startmenu') {
+        const startmenuMain = document.querySelector('.startmenu');
+        const style = window.getComputedStyle(startmenuMain);
+        const visibility = style.getPropertyValue('visibility');
+        if (visibility === 'hidden') {
+            startmenuMain.style.visibility = 'visible';
+        } else {
+            startmenuMain.style.visibility = 'hidden';
+        }
     }
 }
 
@@ -1080,3 +1089,23 @@ function updateClock() {
 
 setInterval(updateClock, 1000);
 updateClock();
+
+
+// Start menu
+
+
+const startMenuTerminal = document.getElementById('startmenu-terminal');
+const startMenuFilebrowser = document.getElementById('startmenu-filebrowser');
+const startMenuEditor = document.getElementById('startmenu-editor');
+
+startMenuTerminal.addEventListener('click', () => {
+    showWindow('terminal');
+});
+
+startMenuFilebrowser.addEventListener('click', () => {
+    showWindow('filebrowser');
+});
+
+startMenuEditor.addEventListener('click', () => {
+    showWindow('editor');
+});
