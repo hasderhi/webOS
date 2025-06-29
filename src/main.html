@@ -8,19 +8,20 @@
 </head>
     <body>
         <div class="desktop" id="desktop">
+            <div class="desktop-watermark">webOS</div>
             <div class="terminal-main" id="terminal-main">
                 <div class="prevent-select">
                     <div class="terminal-header" id="terminal-header">
                         <div class="terminal-header-buttons">
-                            <button class="button close" onclick="exitCommand()">x</button>
-                            <button class="button minimize" onclick="hideWindow('terminal')">-</button>
-                            <button class="button fullscreen" onclick="toggleFullscreen('terminal')">o</button>
+                            <button class="button close" onclick="exitCommand()"></button>
+                            <button class="button minimize" onclick="hideWindow('terminal')"></button>
+                            <button class="button fullscreen" onclick="toggleFullscreen('terminal')"></button>
                             <span class="description">Terminal</span>
                         </div>
                     </div>
                 </div>
                 <div class="terminal-content">
-                    <div class="terminal-output" id="terminal-output">webOS version 0.0.1-alpha
+                    <div class="terminal-output" id="terminal-output">webOS version 0.0.2-alpha
 Created by Tobias Kisling (<a href="https://github.com/hasderhi">https://github.com/hasderhi</a>)
 Enter <i>help</i> to get started...
                     </div>
@@ -34,9 +35,9 @@ Enter <i>help</i> to get started...
                 <div class="prevent-select">
                     <div class="filebrowser-header" id="filebrowser-header">
                         <div class="terminal-header-buttons">
-                            <button class="button close" onclick="hideWindow('filebrowser')">x</button>
-                            <button class="button minimize" onclick="hideWindow('filebrowser')">-</button>
-                            <button class="button fullscreen" onclick="toggleFullscreen('filebrowser')">o</button>
+                            <button class="button close" onclick="hideWindow('filebrowser')"></button>
+                            <button class="button minimize" onclick="hideWindow('filebrowser')"></button>
+                            <button class="button fullscreen" onclick="toggleFullscreen('filebrowser')"></button>
                             <span class="description">File Browser</span>
                             <br>
                             <br>
@@ -56,8 +57,8 @@ Enter <i>help</i> to get started...
                 <div class="prevent-select">
                     <div class="editor-header" id="editor-header">
                         <div class="editor-header-buttons">
-                            <button class="button close" onclick="hideWindow('editor')">x</button> <!--TODO: Change the function as soon as editor is implememted-->
-                            <button class="button minimize" onclick="hideWindow('editor')">-</button>
+                            <button class="button close" onclick="hideWindow('editor')"></button> <!--TODO: Change the function as soon as editor is implememted-->
+                            <button class="button minimize" onclick="hideWindow('editor')"></button>
                             <span class="description">Editor</span>
                         </div>
                     </div>
@@ -76,7 +77,7 @@ Enter <i>help</i> to get started...
                 <button onclick="createAlert('info', 'INFO_TITLE', 'INFO_MSG')" class="taskbar-icon"><img src="img/icon_info.png" alt="Info (Debug)" width="40px" height="40px"></button>
                 <button onclick="createQuestion('QUESTION_TITLE', 'QUESTION_MSG', 'alert(`Hello World!\n(Not too pleased with the current solution, may change later)`); this.closest(`.question-main`).remove()')" class="taskbar-icon"><img src="img/icon_question.png" alt="Info (Debug)" width="40px" height="40px"></button>
                 <button onclick="loadTextEditor('home/readme.txt')" class="taskbar-icon"><img src="img/icon_debug.png" alt="Load Editor (Debug)" width="40px" height="40px"></button>
-                
+                <div class="taskbar-clock" id="taskbar-clock"></div>
             </div>
         </div>
 

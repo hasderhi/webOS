@@ -576,7 +576,7 @@ function clearCommand() {
 function exitCommand() {
     hideWindow('terminal');
     const terminalOutput = document.getElementById('terminal-output');
-    terminalOutput.innerHTML = `webOS version 0.0.1-alpha
+    terminalOutput.innerHTML = `webOS version 0.0.2-alpha
 Created by Tobias Kisling (<a href="https://github.com/hasderhi">https://github.com/hasderhi</a>)
 Enter <i>help</i> to get started...`; // It is very likely that I'm going to forget to change 
 // the version number on both sides (HTML, JS) at one point...
@@ -1056,3 +1056,27 @@ function createQuestion(title, message, option) {
         document.body.style.userSelect = '';
     });
 }
+
+
+// Taskbar clock
+
+function updateClock() {
+    const clockEl = document.getElementById('taskbar-clock');
+    if (!clockEl) return;
+
+    const now = new Date();
+
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const time = `${hours}:${minutes}`;
+
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+    const date = `${day}/${month}/${year}`;
+
+    clockEl.textContent = `${time}\n${date}`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
