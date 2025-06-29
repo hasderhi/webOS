@@ -800,10 +800,15 @@ function getFileContentFromPath(path) {
 
 
 function loadTextEditor(path) { // Trash function, will be replaced ASAP
-    content = getFileContentFromPath(path);
+    if (path === null) {
+        return; // if the user somehow managed to bypass the previous safeguard
+    }
+    // nvm, decided to keep it anyways
+    let content = getFileContentFromPath(path);
     if (typeof content === 'string' || content instanceof String) {
         document.getElementById('editor-content').value = content;
         showWindow('editor');
+        editorCurrentPath = path;
     } else {
         // We didn't get anything from the getFileContentFromPath because the input was invalid
         return; // Error is shown anyways
@@ -811,8 +816,28 @@ function loadTextEditor(path) { // Trash function, will be replaced ASAP
 
 }
 
+function saveFromTextEditor() {
+    let content = document.getElementById('editor-content').value;
+    writeToFile(content, editorCurrentPath);
+}
 
 
+function writeToFile(content, fileName) {
+    if (!fileName || typeof content !== 'string') {
+        createAlert('error', 'Error', 'Could not write to file.');
+        return;
+    }
+
+    const dir = getCurrentDir();
+
+    dir.contents[fileName] = {
+        type: 'file',
+        content: content
+    };
+
+    renderFileBrowserContent();
+    createAlert('info', 'Editor', `File "${fileName}" written successfully.`)
+}
 
 
 
