@@ -48,6 +48,21 @@ function hideWindow(windowName) {
     }
 }
 
+function showWindow(windowName) {
+    // In some cases, it could be useful to make sure the window is open
+    if (windowName === 'terminal') {
+        const terminalMain = document.querySelector('.terminal-main');
+        terminalMain.style.visibility = 'visible';
+    } else if (windowName === 'filebrowser') {
+        const fileBrowserMain = document.querySelector('.filebrowser-main');
+        fileBrowserMain.style.visibility = 'visible';
+    } else if (windowName === 'editor') {
+        const editorMain = document.querySelector('.editor-main');
+        editorMain.style.visibility = 'visible';
+    }
+}
+
+
 function toggleFullscreen(windowName) {
     // the wackiest "full"screen view you've ever seen
     if (windowName === 'terminal') {
@@ -514,6 +529,9 @@ function processCommand(terminalCommand) {
     } else if (terminalCommand.startsWith('rm ')) {
         const arg = terminalCommand.split(' ')[1];
         rmCommand(arg);
+    } else if (terminalCommand.startsWith('editor')) { 
+        const arg = terminalCommand.split(' ')[1];
+        loadTextEditor(arg);
     } else if (terminalCommand === 'pwd') {
         pwdCommand();
     } else if (terminalCommand === 'whoami') {
@@ -712,6 +730,7 @@ function renderFileBrowserContent(path = '/') {
     input.value = path;
 
     const dir = getDirectoryFromPath(path);
+ 
 
     if (!dir || dir.type !== 'directory') {
         container.appendChild(document.createTextNode("Invalid path"));
@@ -735,7 +754,9 @@ function renderFileBrowserContent(path = '/') {
 
         if (item.type === 'file') {
             element.addEventListener('click', () => {
-                alert(item.content); // Just for testing, later there'll be an editor, I'm just unsure if it's gonna be a nice visual one or if I want to simulate VIM
+                editorPath = `${path}/${name}`.slice(1);
+                loadTextEditor(editorPath);
+                
             });
         }
 
@@ -763,7 +784,8 @@ function getFileContentFromPath(path) {
     for (let i = 0; i < parts.length; i++) {
         const part = parts[i];
         if (!current || current.type !== 'directory' || !current.contents[part]) {
-            return 'Error: Path not found';
+            createAlert('error', 'Error', 'Path not found');
+            return;
         }
         current = current.contents[part];
     }
@@ -771,14 +793,22 @@ function getFileContentFromPath(path) {
     if (current.type === 'file') {
         return current.content;
     } else {
-        return 'Error: Not a file';
+        createAlert('error', 'Error', 'Not a file.');
+        return;
     }
 }
 
 
 function loadTextEditor(path) { // Trash function, will be replaced ASAP
     content = getFileContentFromPath(path);
-    document.getElementById('editor-content').value = content;
+    if (typeof content === 'string' || content instanceof String) {
+        document.getElementById('editor-content').value = content;
+        showWindow('editor');
+    } else {
+        // We didn't get anything from the getFileContentFromPath because the input was invalid
+        return; // Error is shown anyways
+    }
+
 }
 
 
