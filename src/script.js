@@ -37,7 +37,7 @@ function changeVisibility(windowName) {
         const style = window.getComputedStyle(startmenuMain);
         const visibility = style.getPropertyValue('visibility');
         if (visibility === 'hidden') {
-            startmenuMain.style.visibility = 'visible';
+            startmenuMain.style.visibility = 'visible'; // why do I even call it startMenu - main if there's no main?
         } else {
             startmenuMain.style.visibility = 'hidden';
         }
@@ -54,6 +54,9 @@ function hideWindow(windowName) {
     } else if (windowName === 'editor') {
         const editorMain = document.querySelector('.editor-main');
         editorMain.style.visibility = 'hidden';
+    } else if (windowName === 'startmenu') {
+        const startMenuMain = document.querySelector('.startmenu');
+        startMenuMain.style.visibility = 'hidden';
     }
 }
 
@@ -1100,12 +1103,15 @@ const startMenuEditor = document.getElementById('startmenu-editor');
 
 startMenuTerminal.addEventListener('click', () => {
     showWindow('terminal');
+    hideWindow('startmenu');
 });
 
 startMenuFilebrowser.addEventListener('click', () => {
     showWindow('filebrowser');
+    hideWindow('startmenu');
 });
 
 startMenuEditor.addEventListener('click', () => {
-    showWindow('editor');
+    showWindow('editor')    
+    hideWindow('startmenu');
 });
